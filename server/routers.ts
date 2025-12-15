@@ -5,6 +5,9 @@ import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import * as db from "./db";
+import * as auth from "./auth";
+import { SignJWT } from "jose";
+import { ENV } from "./_core/env";
 
 // ==================== ROLE-BASED PROCEDURES ====================
 
@@ -33,6 +36,101 @@ const politicoProcedure = protectedProcedure.use(({ ctx, next }) => {
 
 const authRouter = router({
   me: publicProcedure.query((opts) => opts.ctx.user),
+  
+  // Login tradicional com usuário/senha
+  login: publicProcedure
+    .input(
+      z.object({
+        usernameOrEmail: z.string().min(1, "Usuário ou email é obrigatório"),
+        password: z.string().min(1, "Senha é obrigatória"),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const result = await auth.authenticateUser(input.usernameOrEmail, input.password);
+      
+      if (!result.success || !result.user) {
+        throw new TRPCError({ code: "UNAUTHORIZED", message: result.error || "Falha na autenticação" });
+      }
+
+      // Create JWT token
+      const secret = new TextEncoder().encode(ENV.jwtSecret);
+      const token = await new SignJWT({
+        sub: result.user.openId,
+        name: result.user.name,
+        email: result.user.email,
+        role: result.user.role,
+      })
+        .setProtectedHeader({ alg: "HS256" })
+        .setIssuedAt()
+        .setExpirationTime("7d")
+        .sign(secret);
+
+      // Set cookie
+      const cookieOptions = getSessionCookieOptions(ctx.req);
+      ctx.res.cookie(COOKIE_NAME, token, {
+        ...cookieOptions,
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      });
+
+      return {
+        success: true,
+        user: {
+          id: result.user.id,
+          name: result.user.name,
+          email: result.user.email,
+          role: result.user.role,
+        },
+      };
+    }),
+
+  // Registro de novo usuário
+  register: publicProcedure
+    .input(
+      z.object({
+        username: z.string().min(3, "Usuário deve ter pelo menos 3 caracteres"),
+        password: z.string().min(6, "Senha deve ter pelo menos 6 caracteres"),
+        name: z.string().min(2, "Nome é obrigatório"),
+        email: z.string().email("Email inválido"),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const result = await auth.createUser({
+        username: input.username,
+        password: input.password,
+        name: input.name,
+        email: input.email,
+        role: "demo", // Novos usuários começam como demo
+      });
+
+      if (!result.success) {
+        throw new TRPCError({ code: "BAD_REQUEST", message: result.error || "Erro ao criar usuário" });
+      }
+
+      return { success: true, message: "Usuário criado com sucesso" };
+    }),
+
+  // Alterar senha
+  changePassword: protectedProcedure
+    .input(
+      z.object({
+        currentPassword: z.string().min(1),
+        newPassword: z.string().min(6, "Nova senha deve ter pelo menos 6 caracteres"),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const result = await auth.updatePassword(
+        ctx.user.id,
+        input.currentPassword,
+        input.newPassword
+      );
+
+      if (!result.success) {
+        throw new TRPCError({ code: "BAD_REQUEST", message: result.error || "Erro ao alterar senha" });
+      }
+
+      return { success: true };
+    }),
+
   logout: publicProcedure.mutation(({ ctx }) => {
     const cookieOptions = getSessionCookieOptions(ctx.req);
     ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });

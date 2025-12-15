@@ -101,3 +101,11 @@
 - [ ] Importar dados de comparecimento/abstenção
 - [ ] Configurar DNS do domínio dte.api.br
 - [ ] Criar usuários gestores no sistema
+
+## Sistema de Login Tradicional
+- [ ] Atualizar schema do banco para suportar login com senha
+- [ ] Implementar hash de senha com bcrypt
+- [ ] Criar rotas de autenticação (login, registro, logout)
+- [ ] Criar página de login
+- [ ] Criar página de registro
+- [ ] Preparar estrutura para SSO futuro (Google, GitHub)

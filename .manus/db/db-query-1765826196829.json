@@ -1,0 +1,9 @@
+{
+  "query": "UPDATE users SET username = 'admdataroit', passwordHash = '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/X4.S3eqVPHQdPKGGK', loginMethod = 'local' WHERE email = 'contato@dataro-it.com.br' OR openId = 'admdataroit';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 26SeHEBTY8hrnxB.ee3f2eee2c27 --database epDDcfR53ZtdJLS39UEzsM --execute UPDATE users SET username = 'admdataroit', passwordHash = '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/X4.S3eqVPHQdPKGGK', loginMethod = 'local' WHERE email = 'contato@dataro-it.com.br' OR openId = 'admdataroit';",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 107
+}

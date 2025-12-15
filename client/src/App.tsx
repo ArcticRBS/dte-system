@@ -16,12 +16,14 @@ import Importar from "./pages/Importar";
 import Usuarios from "./pages/Usuarios";
 import Demo from "./pages/Demo";
 import Relatorios from "./pages/Relatorios";
+import Login from "./pages/Login";
 
 function Router() {
   return (
     <Switch>
       {/* Public Routes */}
       <Route path="/" component={Home} />
+      <Route path="/login" component={Login} />
       <Route path="/demo" component={Demo} />
       
       {/* Protected Routes - Dashboard */}
