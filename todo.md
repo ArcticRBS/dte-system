@@ -80,5 +80,5 @@
 
 ## Correções
 - [x] Corrigir landing page não aparecendo no deploy Vercel
-- [ ] Criar landing page profissional com logo DATA-RO
-- [ ] Atualizar sidebar com logo DATA-RO
+- [x] Criar landing page profissional com logo DATA-RO
+- [x] Atualizar sidebar com logo DATA-RO
