@@ -18,7 +18,10 @@ import {
   Calendar,
   ArrowUpRight,
   ArrowDownRight,
+  FileDown,
+  Loader2,
 } from "lucide-react";
+import { toast } from "sonner";
 import {
   LineChart,
   Line,
@@ -125,6 +128,148 @@ export default function DashboardComparativo() {
     anterior: previousDays[index] ? Number(previousDays[index].count) : 0,
   }));
 
+  // Generate PDF report function
+  const generatePDFReport = () => {
+    const periodLabel = period === "week" ? "Semanal" : "Mensal";
+    const periodDesc = period === "week"
+      ? "Últimos 7 dias vs 7 dias anteriores"
+      : "Últimos 30 dias vs 30 dias anteriores";
+
+    const calcChange = (current: number, previous: number) => {
+      if (previous === 0) return current > 0 ? "+100%" : "0%";
+      const change = ((current - previous) / previous * 100).toFixed(1);
+      return Number(change) >= 0 ? `+${change}%` : `${change}%`;
+    };
+
+    return `
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Relatório Comparativo - DTE</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 40px; color: #333; }
+    h1 { color: #059669; border-bottom: 2px solid #059669; padding-bottom: 10px; }
+    h2 { color: #374151; margin-top: 30px; }
+    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+    .logo { font-size: 24px; font-weight: bold; color: #059669; }
+    .date { color: #6b7280; }
+    .metrics { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 20px 0; }
+    .metric { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; }
+    .metric-title { font-size: 14px; color: #6b7280; margin-bottom: 8px; }
+    .metric-value { font-size: 28px; font-weight: bold; color: #111827; }
+    .metric-change { font-size: 14px; margin-top: 8px; }
+    .positive { color: #059669; }
+    .negative { color: #dc2626; }
+    .neutral { color: #6b7280; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    th, td { border: 1px solid #e5e7eb; padding: 12px; text-align: left; }
+    th { background: #f3f4f6; font-weight: 600; }
+    .insights { background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px; padding: 20px; margin-top: 30px; }
+    .insights h3 { color: #059669; margin-top: 0; }
+    .insights ul { margin: 0; padding-left: 20px; }
+    .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 12px; }
+    @media print { body { padding: 20px; } }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">DTE - Data Tracking Eleitoral</div>
+    <div class="date">Gerado em: ${new Date().toLocaleString("pt-BR")}</div>
+  </div>
+
+  <h1>Relatório Comparativo ${periodLabel}</h1>
+  <p>${periodDesc}</p>
+
+  <h2>Métricas Principais</h2>
+  <div class="metrics">
+    <div class="metric">
+      <div class="metric-title">Total de Atividades</div>
+      <div class="metric-value">${stats?.current.activities || 0}</div>
+      <div class="metric-change ${(stats?.current.activities || 0) >= (stats?.previous.activities || 0) ? 'positive' : 'negative'}">
+        ${calcChange(stats?.current.activities || 0, stats?.previous.activities || 0)} vs período anterior (${stats?.previous.activities || 0})
+      </div>
+    </div>
+    <div class="metric">
+      <div class="metric-title">Novos Usuários</div>
+      <div class="metric-value">${stats?.current.newUsers || 0}</div>
+      <div class="metric-change ${(stats?.current.newUsers || 0) >= (stats?.previous.newUsers || 0) ? 'positive' : 'negative'}">
+        ${calcChange(stats?.current.newUsers || 0, stats?.previous.newUsers || 0)} vs período anterior (${stats?.previous.newUsers || 0})
+      </div>
+    </div>
+    <div class="metric">
+      <div class="metric-title">Importações</div>
+      <div class="metric-value">${stats?.current.imports || 0}</div>
+      <div class="metric-change ${(stats?.current.imports || 0) >= (stats?.previous.imports || 0) ? 'positive' : 'negative'}">
+        ${calcChange(stats?.current.imports || 0, stats?.previous.imports || 0)} vs período anterior (${stats?.previous.imports || 0})
+      </div>
+    </div>
+    <div class="metric">
+      <div class="metric-title">Logins</div>
+      <div class="metric-value">${stats?.current.logins || 0}</div>
+      <div class="metric-change ${(stats?.current.logins || 0) >= (stats?.previous.logins || 0) ? 'positive' : 'negative'}">
+        ${calcChange(stats?.current.logins || 0, stats?.previous.logins || 0)} vs período anterior (${stats?.previous.logins || 0})
+      </div>
+    </div>
+  </div>
+
+  <h2>Comparação Detalhada</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Métrica</th>
+        <th>Período Atual</th>
+        <th>Período Anterior</th>
+        <th>Variação</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Atividades</td>
+        <td>${stats?.current.activities || 0}</td>
+        <td>${stats?.previous.activities || 0}</td>
+        <td>${calcChange(stats?.current.activities || 0, stats?.previous.activities || 0)}</td>
+      </tr>
+      <tr>
+        <td>Novos Usuários</td>
+        <td>${stats?.current.newUsers || 0}</td>
+        <td>${stats?.previous.newUsers || 0}</td>
+        <td>${calcChange(stats?.current.newUsers || 0, stats?.previous.newUsers || 0)}</td>
+      </tr>
+      <tr>
+        <td>Importações</td>
+        <td>${stats?.current.imports || 0}</td>
+        <td>${stats?.previous.imports || 0}</td>
+        <td>${calcChange(stats?.current.imports || 0, stats?.previous.imports || 0)}</td>
+      </tr>
+      <tr>
+        <td>Logins</td>
+        <td>${stats?.current.logins || 0}</td>
+        <td>${stats?.previous.logins || 0}</td>
+        <td>${calcChange(stats?.current.logins || 0, stats?.previous.logins || 0)}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="insights">
+    <h3>Insights</h3>
+    <ul>
+      <li>Total de atividades ${(stats?.current.activities || 0) >= (stats?.previous.activities || 0) ? 'aumentou' : 'diminuiu'} em relação ao período anterior</li>
+      <li>${stats?.current.newUsers || 0} novo(s) usuário(s) cadastrado(s) neste período</li>
+      <li>${stats?.current.imports || 0} importação(ões) realizada(s)</li>
+      <li>${stats?.current.logins || 0} login(s) registrado(s)</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <p>Este relatório foi gerado automaticamente pelo sistema DTE - Data Tracking Eleitoral.</p>
+    <p>Para mais informações, acesse o painel administrativo.</p>
+  </div>
+</body>
+</html>
+    `;
+  };
+
   // Summary comparison data
   const summaryData = [
     {
@@ -160,18 +305,40 @@ export default function DashboardComparativo() {
               Compare métricas entre períodos para identificar tendências
             </p>
           </div>
-          <Tabs value={period} onValueChange={(v) => setPeriod(v as "week" | "month")}>
-            <TabsList>
-              <TabsTrigger value="week" className="gap-2">
-                <Calendar className="w-4 h-4" />
-                Semanal
-              </TabsTrigger>
-              <TabsTrigger value="month" className="gap-2">
-                <Calendar className="w-4 h-4" />
-                Mensal
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
+          <div className="flex items-center gap-4">
+            <Button
+              variant="outline"
+              className="gap-2"
+              onClick={() => {
+                // Generate PDF report
+                const reportContent = generatePDFReport();
+                const blob = new Blob([reportContent], { type: "text/html" });
+                const url = URL.createObjectURL(blob);
+                const printWindow = window.open(url, "_blank");
+                if (printWindow) {
+                  printWindow.onload = () => {
+                    printWindow.print();
+                  };
+                }
+                toast.success("Relatório gerado! Use Ctrl+P para salvar como PDF.");
+              }}
+            >
+              <FileDown className="w-4 h-4" />
+              Exportar PDF
+            </Button>
+            <Tabs value={period} onValueChange={(v) => setPeriod(v as "week" | "month")}>
+              <TabsList>
+                <TabsTrigger value="week" className="gap-2">
+                  <Calendar className="w-4 h-4" />
+                  Semanal
+                </TabsTrigger>
+                <TabsTrigger value="month" className="gap-2">
+                  <Calendar className="w-4 h-4" />
+                  Mensal
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
         </div>
 
         {/* Period Info */}

@@ -24,6 +24,7 @@ import LogsAuditoria from "./pages/LogsAuditoria";
 import BackupDados from "./pages/BackupDados";
 import BackupsAgendados from "./pages/BackupsAgendados";
 import DashboardComparativo from "./pages/DashboardComparativo";
+import Notificacoes from "./pages/Notificacoes";
 
 function Router() {
   return (
@@ -51,6 +52,7 @@ function Router() {
       <Route path="/backup" component={BackupDados} />
       <Route path="/backups-agendados" component={BackupsAgendados} />
       <Route path="/dashboard-comparativo" component={DashboardComparativo} />
+      <Route path="/notificacoes" component={Notificacoes} />
       
       {/* Fallback */}
       <Route path="/404" component={NotFound} />

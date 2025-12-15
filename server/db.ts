@@ -1,4 +1,4 @@
-import { eq, and, desc, sql, gte, lte, sum, count } from "drizzle-orm";
+import { eq, and, desc, sql, gte, lte, sum, count, or, isNull } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import {
   InsertUser,
@@ -1199,4 +1199,113 @@ function calculateNextRunTime(
   }
 
   return next;
+}
+
+
+// ==================== NOTIFICAÇÕES ADMIN ====================
+
+import { adminNotifications } from "../drizzle/schema";
+
+export async function getAdminNotifications(userId?: number, limit = 50) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const conditions = [];
+  if (userId) {
+    // Get notifications for specific user or all admins (userId = null)
+    conditions.push(
+      or(
+        eq(adminNotifications.userId, userId),
+        isNull(adminNotifications.userId)
+      )
+    );
+  }
+  
+  return db.select()
+    .from(adminNotifications)
+    .where(conditions.length > 0 ? and(...conditions) : undefined)
+    .orderBy(desc(adminNotifications.createdAt))
+    .limit(limit);
+}
+
+export async function getUnreadNotificationCount(userId: number) {
+  const db = await getDb();
+  if (!db) return 0;
+  
+  const result = await db.select({ count: count() })
+    .from(adminNotifications)
+    .where(and(
+      or(
+        eq(adminNotifications.userId, userId),
+        isNull(adminNotifications.userId)
+      ),
+      eq(adminNotifications.isRead, false)
+    ));
+  
+  return Number(result[0]?.count || 0);
+}
+
+export async function createAdminNotification(data: {
+  userId?: number;
+  title: string;
+  message: string;
+  type?: "info" | "warning" | "error" | "success";
+  category?: "backup" | "security" | "system" | "user" | "import";
+  actionUrl?: string;
+  metadata?: Record<string, unknown>;
+}) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.insert(adminNotifications).values({
+    userId: data.userId,
+    title: data.title,
+    message: data.message,
+    type: data.type || "info",
+    category: data.category || "system",
+    actionUrl: data.actionUrl,
+    metadata: data.metadata,
+  });
+  
+  return result[0].insertId;
+}
+
+export async function markNotificationAsRead(id: number) {
+  const db = await getDb();
+  if (!db) return;
+  await db.update(adminNotifications).set({ isRead: true }).where(eq(adminNotifications.id, id));
+}
+
+export async function markAllNotificationsAsRead(userId: number) {
+  const db = await getDb();
+  if (!db) return;
+  await db.update(adminNotifications)
+    .set({ isRead: true })
+    .where(
+      or(
+        eq(adminNotifications.userId, userId),
+        isNull(adminNotifications.userId)
+      )
+    );
+}
+
+export async function deleteNotification(id: number) {
+  const db = await getDb();
+  if (!db) return;
+  await db.delete(adminNotifications).where(eq(adminNotifications.id, id));
+}
+
+// Helper to send notification to all admins
+export async function notifyAllAdmins(data: {
+  title: string;
+  message: string;
+  type?: "info" | "warning" | "error" | "success";
+  category?: "backup" | "security" | "system" | "user" | "import";
+  actionUrl?: string;
+  metadata?: Record<string, unknown>;
+}) {
+  return createAdminNotification({
+    ...data,
+    userId: undefined, // null = all admins
+  });
 }

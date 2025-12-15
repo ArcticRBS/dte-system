@@ -416,6 +416,21 @@ export const backupHistory = mysqlTable("backup_history", {
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
+// ==================== NOTIFICAÇÕES ADMIN ====================
+
+export const adminNotifications = mysqlTable("admin_notifications", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").references(() => users.id), // null = all admins
+  title: varchar("title", { length: 200 }).notNull(),
+  message: text("message").notNull(),
+  type: mysqlEnum("type", ["info", "warning", "error", "success"]).default("info"),
+  category: mysqlEnum("category", ["backup", "security", "system", "user", "import"]).default("system"),
+  isRead: boolean("isRead").default(false),
+  actionUrl: varchar("actionUrl", { length: 500 }),
+  metadata: json("metadata"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
 // ==================== TYPES ====================
 
 export type Regiao = typeof regioes.$inferSelect;

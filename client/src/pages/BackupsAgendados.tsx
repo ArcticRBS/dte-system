@@ -129,6 +129,27 @@ export default function BackupsAgendados() {
     },
   });
 
+  const executeMutation = trpc.scheduledBackups.executeNow.useMutation({
+    onSuccess: (data) => {
+      toast.success(`Backup executado com sucesso! ${Object.values(data.recordCounts).reduce((a, b) => a + b, 0)} registros exportados.`);
+      utils.scheduledBackups.history.invalidate();
+      
+      // Download the file
+      const blob = new Blob([data.fileContent], { type: data.fileName.endsWith('.json') ? 'application/json' : 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = data.fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    },
+    onError: (error) => {
+      toast.error(`Erro ao executar backup: ${error.message}`);
+    },
+  });
+
   // Redirect non-admin users
   if (!authLoading && (!user || user.role !== "admin")) {
     setLocation("/dashboard");
@@ -494,6 +515,27 @@ export default function BackupsAgendados() {
                     )}
                   </div>
                   <div className="flex items-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="gap-1"
+                      disabled={executeMutation.isPending}
+                      onClick={() => {
+                        executeMutation.mutate({
+                          scheduledBackupId: backup.id,
+                          dataTypes: (backup.dataTypes as string[]) || [],
+                          format: (backup.format as "csv" | "json") || "csv",
+                          emailRecipients: (backup.emailRecipients as string[]) || [],
+                        });
+                      }}
+                    >
+                      {executeMutation.isPending ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <Play className="w-4 h-4" />
+                      )}
+                      Executar
+                    </Button>
                     <Switch
                       checked={backup.isActive ?? false}
                       onCheckedChange={(checked) =>

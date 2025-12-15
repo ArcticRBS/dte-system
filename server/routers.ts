@@ -732,6 +732,115 @@ const scheduledBackupsRouter = router({
     .query(async ({ input }) => {
       return db.getBackupHistory(input?.limit, input?.scheduledBackupId);
     }),
+  executeNow: adminProcedure
+    .input(
+      z.object({
+        scheduledBackupId: z.number().optional(),
+        dataTypes: z.array(z.string()),
+        format: z.enum(["csv", "json"]),
+        emailRecipients: z.array(z.string()).optional(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      // Create history entry
+      const historyId = await db.createBackupHistoryEntry({
+        scheduledBackupId: input.scheduledBackupId,
+        dataTypes: input.dataTypes,
+      });
+
+      try {
+        // Execute backup and collect data
+        const recordCounts: Record<string, number> = {};
+        const backupData: Record<string, unknown[]> = {};
+
+        for (const dataType of input.dataTypes) {
+          let data: unknown[] = [];
+          switch (dataType) {
+            case "users":
+              data = await db.exportUsers();
+              break;
+            case "eleitorado":
+              data = await db.exportEleitorado();
+              break;
+            case "resultados":
+              data = await db.exportResultados();
+              break;
+            case "activities":
+              data = await db.exportActivities();
+              break;
+          }
+          backupData[dataType] = data;
+          recordCounts[dataType] = data.length;
+        }
+
+        // Generate file content
+        let fileContent: string;
+        if (input.format === "json") {
+          fileContent = JSON.stringify(backupData, null, 2);
+        } else {
+          // CSV format - combine all data types
+          const csvParts: string[] = [];
+          for (const [dataType, data] of Object.entries(backupData)) {
+            if (data.length > 0) {
+              const headers = Object.keys(data[0] as Record<string, unknown>);
+              csvParts.push(`# ${dataType.toUpperCase()}`);
+              csvParts.push(headers.join(","));
+              for (const row of data) {
+                const values = headers.map((h) => {
+                  const val = (row as Record<string, unknown>)[h];
+                  if (val === null || val === undefined) return "";
+                  const str = String(val);
+                  return str.includes(",") ? `"${str}"` : str;
+                });
+                csvParts.push(values.join(","));
+              }
+              csvParts.push("");
+            }
+          }
+          fileContent = csvParts.join("\n");
+        }
+
+        const fileSize = Buffer.byteLength(fileContent, "utf8");
+
+        // Update history entry with success
+        if (historyId) {
+          await db.updateBackupHistoryEntry(historyId, {
+            status: "success",
+            recordCounts,
+            fileSize,
+            completedAt: new Date(),
+            emailSent: (input.emailRecipients?.length ?? 0) > 0,
+          });
+        }
+
+        // Log activity
+        await db.logUserActivity({
+          userId: ctx.user.id,
+          activityType: "export",
+          description: `Backup executado manualmente: ${input.dataTypes.join(", ")}`,
+        });
+
+        // Return the data for download
+        return {
+          success: true,
+          historyId,
+          recordCounts,
+          fileSize,
+          fileContent,
+          fileName: `backup_${new Date().toISOString().split("T")[0]}.${input.format}`,
+        };
+      } catch (error) {
+        // Update history entry with failure
+        if (historyId) {
+          await db.updateBackupHistoryEntry(historyId, {
+            status: "failed",
+            errorMessage: error instanceof Error ? error.message : "Erro desconhecido",
+            completedAt: new Date(),
+          });
+        }
+        throw error;
+      }
+    }),
 });
 
 // ==================== COMPARATIVE STATS ROUTER ====================
@@ -814,6 +923,53 @@ const settingsRouter = router({
     }),
 });
 
+// ==================== NOTIFICATIONS ROUTER ====================
+
+const notificationsRouter = router({
+  list: adminProcedure
+    .input(
+      z.object({
+        limit: z.number().optional(),
+      }).optional()
+    )
+    .query(async ({ ctx, input }) => {
+      return db.getAdminNotifications(ctx.user.id, input?.limit);
+    }),
+  unreadCount: adminProcedure.query(async ({ ctx }) => {
+    return db.getUnreadNotificationCount(ctx.user.id);
+  }),
+  markAsRead: adminProcedure
+    .input(z.object({ id: z.number() }))
+    .mutation(async ({ input }) => {
+      await db.markNotificationAsRead(input.id);
+      return { success: true };
+    }),
+  markAllAsRead: adminProcedure.mutation(async ({ ctx }) => {
+    await db.markAllNotificationsAsRead(ctx.user.id);
+    return { success: true };
+  }),
+  delete: adminProcedure
+    .input(z.object({ id: z.number() }))
+    .mutation(async ({ input }) => {
+      await db.deleteNotification(input.id);
+      return { success: true };
+    }),
+  create: adminProcedure
+    .input(
+      z.object({
+        title: z.string(),
+        message: z.string(),
+        type: z.enum(["info", "warning", "error", "success"]).optional(),
+        category: z.enum(["backup", "security", "system", "user", "import"]).optional(),
+        actionUrl: z.string().optional(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const id = await db.notifyAllAdmins(input);
+      return { success: true, id };
+    }),
+});
+
 export const appRouter = router({
   system: systemRouter,
   auth: authRouter,
@@ -833,6 +989,7 @@ export const appRouter = router({
   backup: backupRouter,
   scheduledBackups: scheduledBackupsRouter,
   comparative: comparativeRouter,
+  notifications: notificationsRouter,
 });
 
 export type AppRouter = typeof appRouter;

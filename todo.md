@@ -168,3 +168,25 @@
 - [x] Implementar comparação semana atual vs anterior
 - [x] Implementar comparação mês atual vs anterior
 - [x] Adicionar gráficos de tendência
+
+## Menu Admin Colapsável
+- [x] Implementar seção de administração minimizável
+- [x] Salvar estado do menu no localStorage
+- [x] Adicionar animação suave de expansão/colapso
+
+## Execução Real de Backups
+- [x] Criar endpoint para executar backup manualmente
+- [x] Implementar geração de arquivos CSV/JSON
+- [x] Configurar envio de email com anexo
+- [x] Atualizar histórico de backups
+
+## Notificações Push Admin
+- [x] Criar tabela de notificações no banco
+- [x] Implementar sistema de alertas para admin
+- [x] Adicionar badge de notificações no menu
+- [x] Criar página de central de notificações
+
+## Exportação PDF de Relatórios
+- [x] Implementar geração de PDF do dashboard comparativo
+- [x] Adicionar botão de exportar PDF
+- [x] Incluir gráficos e métricas no PDF

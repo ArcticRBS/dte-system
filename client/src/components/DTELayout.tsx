@@ -4,7 +4,9 @@ import { cn } from "@/lib/utils";
 import { trpc } from "@/lib/trpc";
 import {
   BarChart3,
+  Bell,
   ChevronDown,
+  ChevronRight,
   FileSpreadsheet,
   Home,
   LogOut,
@@ -24,7 +26,7 @@ import {
   TrendingUp,
   Clock,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "./ui/button";
 import {
@@ -59,6 +61,7 @@ const mainNavItems: NavItem[] = [
 // Itens de administração (visíveis apenas para administradores)
 const adminNavItems: NavItem[] = [
   { label: "Usuários", href: "/usuarios", icon: <Shield className="w-5 h-5" />, roles: ["admin"] },
+  { label: "Notificações", href: "/notificacoes", icon: <Bell className="w-5 h-5" />, roles: ["admin"] },
   { label: "Relatórios Admin", href: "/relatorios-admin", icon: <PieChart className="w-5 h-5" />, roles: ["admin"] },
   { label: "Comparativo", href: "/dashboard-comparativo", icon: <TrendingUp className="w-5 h-5" />, roles: ["admin"] },
   { label: "Logs de Auditoria", href: "/logs-auditoria", icon: <FileText className="w-5 h-5" />, roles: ["admin"] },
@@ -87,10 +90,28 @@ function getRoleBadgeColor(role: string) {
   return colors[role] || colors.demo;
 }
 
+// Hook para persistir estado do menu admin no localStorage
+function useAdminMenuState() {
+  const [isExpanded, setIsExpanded] = useState(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("dte-admin-menu-expanded");
+      return saved !== null ? JSON.parse(saved) : true;
+    }
+    return true;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("dte-admin-menu-expanded", JSON.stringify(isExpanded));
+  }, [isExpanded]);
+
+  return [isExpanded, setIsExpanded] as const;
+}
+
 export function DTELayout({ children }: { children: React.ReactNode }) {
   const { user, loading, logout } = useAuth();
   const [location] = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [adminMenuExpanded, setAdminMenuExpanded] = useAdminMenuState();
 
   const filteredMainNavItems = mainNavItems.filter((item) => {
     if (!item.roles) return true;
@@ -105,6 +126,16 @@ export function DTELayout({ children }: { children: React.ReactNode }) {
   });
 
   const isAdmin = user?.role === "admin";
+
+  // Check if current location is an admin page
+  const isOnAdminPage = adminNavItems.some(item => location === item.href);
+
+  // Auto-expand admin menu when on admin page
+  useEffect(() => {
+    if (isOnAdminPage && !adminMenuExpanded) {
+      setAdminMenuExpanded(true);
+    }
+  }, [isOnAdminPage]);
 
   if (loading) {
     return <DTELayoutSkeleton />;
@@ -188,30 +219,51 @@ export function DTELayout({ children }: { children: React.ReactNode }) {
             ))}
           </nav>
 
-          {/* Admin Section - Only visible for admins */}
+          {/* Admin Section - Collapsible */}
           {isAdmin && filteredAdminNavItems.length > 0 && (
             <div className="px-4 pb-4">
-              <div className="flex items-center gap-2 px-3 py-2 mb-2">
-                <Cog className="w-4 h-4 text-muted-foreground" />
-                <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                  Administração
-                </span>
-              </div>
-              <div className="space-y-1 p-2 rounded-xl bg-sidebar-accent/50 border border-sidebar-border">
-                {filteredAdminNavItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={cn(
-                      "dte-nav-item",
-                      location === item.href && "active"
-                    )}
-                    onClick={() => setSidebarOpen(false)}
-                  >
-                    {item.icon}
-                    <span>{item.label}</span>
-                  </Link>
-                ))}
+              {/* Collapsible Header */}
+              <button
+                onClick={() => setAdminMenuExpanded(!adminMenuExpanded)}
+                className="w-full flex items-center justify-between px-3 py-2 mb-2 rounded-lg hover:bg-sidebar-accent/50 transition-colors group"
+              >
+                <div className="flex items-center gap-2">
+                  <Cog className="w-4 h-4 text-muted-foreground" />
+                  <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    Administração
+                  </span>
+                </div>
+                <div className={cn(
+                  "transition-transform duration-200",
+                  adminMenuExpanded ? "rotate-90" : "rotate-0"
+                )}>
+                  <ChevronRight className="w-4 h-4 text-muted-foreground" />
+                </div>
+              </button>
+              
+              {/* Collapsible Content with Animation */}
+              <div
+                className={cn(
+                  "overflow-hidden transition-all duration-300 ease-in-out",
+                  adminMenuExpanded ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+                )}
+              >
+                <div className="space-y-1 p-2 rounded-xl bg-sidebar-accent/50 border border-sidebar-border">
+                  {filteredAdminNavItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={cn(
+                        "dte-nav-item",
+                        location === item.href && "active"
+                      )}
+                      onClick={() => setSidebarOpen(false)}
+                    >
+                      {item.icon}
+                      <span>{item.label}</span>
+                    </Link>
+                  ))}
+                </div>
               </div>
             </div>
           )}
