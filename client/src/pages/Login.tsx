@@ -353,15 +353,39 @@ export default function Login() {
         </Card>
 
         {/* Footer */}
-        <div className="mt-8 text-center">
-          <img
-            src="/dataro-logo.jpeg"
-            alt="DATA-RO"
-            className="h-10 w-auto mx-auto mb-2 rounded-lg opacity-60"
-          />
-          <p className="text-xs text-slate-500">
-            DATA-RO INTELIGÊNCIA TERRITORIAL<br />
-            TODOS OS DIREITOS RESERVADOS
+        <div className="mt-8 flex flex-col items-center gap-4">
+          <div className="flex items-center gap-4">
+            {/* DATA-RO */}
+            <div className="flex items-center gap-2">
+              <img
+                src="/logo-dataro.jpeg"
+                alt="DATA-RO"
+                className="h-10 w-auto object-contain"
+              />
+              <div className="text-left">
+                <p className="text-xs font-semibold text-slate-300">DATA-RO</p>
+                <p className="text-[10px] text-slate-500">INTELIGÊNCIA TERRITORIAL</p>
+              </div>
+            </div>
+            
+            {/* Barra Divisória */}
+            <div className="w-px h-8 bg-slate-600"></div>
+            
+            {/* DTE */}
+            <div className="flex items-center gap-2">
+              <img
+                src="/logo-dte.png"
+                alt="DTE"
+                className="h-10 w-10 rounded-full object-cover border border-teal-500/30"
+              />
+              <div className="text-left">
+                <p className="text-xs font-semibold text-slate-300">DTE</p>
+                <p className="text-[10px] text-teal-400">Inteligência Eleitoral</p>
+              </div>
+            </div>
+          </div>
+          <p className="text-[10px] text-slate-500">
+            Todos os direitos reservados
           </p>
         </div>
       </div>

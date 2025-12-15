@@ -300,43 +300,49 @@ export default function Home() {
       {/* Footer */}
       <footer className="py-12 px-4 border-t border-white/10 bg-slate-900/50">
         <div className="container">
-          <div className="flex flex-col items-center gap-8">
-            {/* Logo DTE */}
-            <div className="flex items-center gap-4">
-              <img 
-                src="/logo-dte.png" 
-                alt="DTE Logo" 
-                className="w-14 h-14 rounded-full object-cover shadow-lg border-2 border-teal-500/30"
-              />
-              <div className="text-center sm:text-left">
-                <h3 className="font-bold text-lg text-white leading-tight">DATA TRACKING ELEITORAL</h3>
-                <p className="text-teal-400 font-medium">DTE - Inteligência Eleitoral</p>
-              </div>
-            </div>
-            
-            {/* Divisória */}
-            <div className="w-24 h-px bg-gradient-to-r from-transparent via-teal-500/50 to-transparent"></div>
-            
-            {/* DATA-RO */}
-            <div className="flex flex-col items-center gap-3">
+          <div className="flex flex-col items-center gap-6">
+            {/* Logos DATA-RO | DTE */}
+            <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
+              {/* DATA-RO */}
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center shadow-lg">
-                  <span className="text-white font-bold text-sm">DR</span>
-                </div>
+                <img 
+                  src="/logo-dataro.jpeg" 
+                  alt="DATA-RO Logo" 
+                  className="w-14 h-14 object-contain"
+                />
                 <div className="text-center sm:text-left">
-                  <h4 className="font-semibold text-white text-sm">DATA-RO</h4>
-                  <p className="text-slate-400 text-xs">INTELIGÊNCIA TERRITORIAL</p>
+                  <h4 className="font-bold text-white text-sm">DATA-RO</h4>
+                  <p className="text-emerald-400 text-xs">INTELIGÊNCIA TERRITORIAL</p>
                 </div>
               </div>
-              <p className="text-slate-500 text-xs">
-                Todos os direitos reservados
-              </p>
+              
+              {/* Barra Divisória (Pipe) */}
+              <div className="hidden sm:block w-px h-12 bg-slate-600"></div>
+              <div className="sm:hidden w-16 h-px bg-slate-600"></div>
+              
+              {/* DTE */}
+              <div className="flex items-center gap-3">
+                <img 
+                  src="/logo-dte.png" 
+                  alt="DTE Logo" 
+                  className="w-14 h-14 rounded-full object-cover shadow-lg border-2 border-teal-500/30"
+                />
+                <div className="text-center sm:text-left">
+                  <h4 className="font-bold text-white text-sm">DATA TRACKING ELEITORAL</h4>
+                  <p className="text-teal-400 text-xs">DTE - Inteligência Eleitoral</p>
+                </div>
+              </div>
             </div>
+            
+            {/* Todos os direitos reservados */}
+            <p className="text-slate-500 text-xs">
+              Todos os direitos reservados
+            </p>
             
             {/* Copyright */}
             <div className="text-center">
               <p className="text-slate-500 text-xs">
-                © {new Date().getFullYear()} DATA TRACKING ELEITORAL - DTE
+                © {new Date().getFullYear()} DATA-RO INTELIGÊNCIA TERRITORIAL | DATA TRACKING ELEITORAL - DTE
               </p>
             </div>
           </div>

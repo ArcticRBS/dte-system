@@ -263,3 +263,8 @@
 ## Rodapé Landing Page
 - [x] Adicionar logo DATA-RO INTELIGÊNCIA TERRITORIAL no rodapé
 - [x] Adicionar texto "Todos os direitos reservados"
+
+## Atualização Rodapé com Logo Oficial DATA-RO
+- [x] Copiar logo oficial DATA-RO para o projeto
+- [x] Atualizar layout: DATA-RO | DTE com barra divisória
+- [x] Incluir DATA-RO no copyright
