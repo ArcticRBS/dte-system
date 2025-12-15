@@ -118,6 +118,16 @@ export async function updateUserRole(userId: number, role: "admin" | "gestor" | 
   await db.update(users).set({ role }).where(eq(users.id, userId));
 }
 
+export async function updateUserProfile(userId: number, name: string, email?: string) {
+  const db = await getDb();
+  if (!db) return;
+  const updateData: { name: string; email?: string } = { name };
+  if (email) {
+    updateData.email = email;
+  }
+  await db.update(users).set(updateData).where(eq(users.id, userId));
+}
+
 // ==================== REGIÕES E MUNICÍPIOS ====================
 
 export async function getRegioes() {

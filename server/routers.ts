@@ -142,6 +142,17 @@ const usersRouter = router({
   list: adminProcedure.query(async () => {
     return db.getAllUsers();
   }),
+  updateProfile: protectedProcedure
+    .input(
+      z.object({
+        name: z.string().min(2, "Nome deve ter pelo menos 2 caracteres"),
+        email: z.string().email("Email inválido").optional(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      await db.updateUserProfile(ctx.user.id, input.name, input.email);
+      return { success: true };
+    }),
   updateRole: adminProcedure
     .input(
       z.object({

@@ -109,3 +109,9 @@
 - [x] Criar página de login
 - [x] Criar página de registro
 - [x] Preparar estrutura para SSO futuro (Google, GitHub)
+
+## Página de Perfil de Usuário
+- [x] Criar página de perfil com visualização de dados
+- [x] Implementar formulário de edição de dados cadastrais
+- [x] Adicionar funcionalidade de alteração de senha
+- [x] Criar rotas de atualização no backend

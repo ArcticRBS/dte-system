@@ -17,6 +17,7 @@ import Usuarios from "./pages/Usuarios";
 import Demo from "./pages/Demo";
 import Relatorios from "./pages/Relatorios";
 import Login from "./pages/Login";
+import Perfil from "./pages/Perfil";
 
 function Router() {
   return (
@@ -37,6 +38,7 @@ function Router() {
       {/* Admin/Gestor Routes */}
       <Route path="/importar" component={Importar} />
       <Route path="/usuarios" component={Usuarios} />
+      <Route path="/perfil" component={Perfil} />
       
       {/* Fallback */}
       <Route path="/404" component={NotFound} />

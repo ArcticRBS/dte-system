@@ -17,6 +17,7 @@ import {
   Vote,
   X,
   Eye,
+  User,
 } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
@@ -190,6 +191,12 @@ export function DTELayout({ children }: { children: React.ReactNode }) {
                     <p className="text-xs text-muted-foreground">{user.email}</p>
                   </div>
                   <DropdownMenuSeparator />
+                  <Link href="/perfil">
+                    <DropdownMenuItem>
+                      <User className="w-4 h-4 mr-2" />
+                      Meu Perfil
+                    </DropdownMenuItem>
+                  </Link>
                   <DropdownMenuItem onClick={() => logout()}>
                     <LogOut className="w-4 h-4 mr-2" />
                     Sair
