@@ -214,3 +214,8 @@
 - [x] Adicionar logo no layout principal (sidebar)
 - [x] Exibir texto "DATA TRACKING ELEITORAL - DTE" ao lado
 - [x] Criar botão de logout que volta para login
+
+## Favicon e Landing Page
+- [x] Criar favicon a partir da logo
+- [x] Atualizar landing page com nova logo circular
+- [x] Manter cores existentes que combinam com a bússola

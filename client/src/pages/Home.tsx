@@ -34,7 +34,7 @@ export default function Home() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
         <div className="animate-pulse flex flex-col items-center gap-4">
-          <img src="/dataro-logo.jpeg" alt="DATA-RO" className="w-20 h-20 rounded-2xl" />
+          <img src="/logo-dte.png" alt="DTE" className="w-20 h-20 rounded-full object-cover border-2 border-teal-500/30" />
           <div className="h-4 w-32 bg-slate-700 rounded" />
         </div>
       </div>
@@ -48,13 +48,13 @@ export default function Home() {
         <div className="container flex items-center justify-between h-20">
           <div className="flex items-center gap-4">
             <img 
-              src="/dataro-logo.jpeg" 
-              alt="DATA-RO" 
-              className="w-14 h-14 rounded-xl shadow-lg shadow-emerald-500/20"
+              src="/logo-dte.png" 
+              alt="DTE Logo" 
+              className="w-14 h-14 rounded-full object-cover shadow-lg shadow-teal-500/20 border-2 border-teal-500/30"
             />
             <div>
-              <h1 className="font-bold text-xl text-white">DATA-RO</h1>
-              <p className="text-xs text-emerald-400 font-medium">Inteligência Territorial</p>
+              <h1 className="font-bold text-lg text-white leading-tight">DATA TRACKING</h1>
+              <h1 className="font-bold text-lg text-white leading-tight">ELEITORAL - DTE</h1>
             </div>
           </div>
           <nav className="flex items-center gap-4">
@@ -303,18 +303,18 @@ export default function Home() {
           <div className="flex flex-col items-center gap-6">
             <div className="flex items-center gap-4">
               <img 
-                src="/dataro-logo.jpeg" 
-                alt="DATA-RO" 
-                className="w-16 h-16 rounded-xl shadow-lg"
+                src="/logo-dte.png" 
+                alt="DTE Logo" 
+                className="w-16 h-16 rounded-full object-cover shadow-lg border-2 border-teal-500/30"
               />
               <div className="text-center sm:text-left">
-                <h3 className="font-bold text-xl text-white">DATA-RO</h3>
-                <p className="text-emerald-400 font-medium">Inteligência Territorial</p>
+                <h3 className="font-bold text-lg text-white leading-tight">DATA TRACKING ELEITORAL</h3>
+                <p className="text-teal-400 font-medium">DTE - Inteligência Eleitoral</p>
               </div>
             </div>
             <div className="text-center">
               <p className="text-slate-400 text-sm">
-                © {new Date().getFullYear()} DATA-RO INTELIGÊNCIA TERRITORIAL
+                © {new Date().getFullYear()} DATA TRACKING ELEITORAL - DTE
               </p>
               <p className="text-slate-500 text-xs mt-1">
                 TODOS OS DIREITOS RESERVADOS
