@@ -1,0 +1,38 @@
+{
+  "query": "SELECT 'eleitorado' as tabela, COUNT(*) as total FROM eleitorado UNION ALL SELECT 'users', COUNT(*) FROM users UNION ALL SELECT 'resultados_eleitorais', COUNT(*) FROM resultados_eleitorais UNION ALL SELECT 'municipios', COUNT(*) FROM municipios UNION ALL SELECT 'zonas_eleitorais', COUNT(*) FROM zonas_eleitorais UNION ALL SELECT 'bairros', COUNT(*) FROM bairros UNION ALL SELECT 'partidos', COUNT(*) FROM partidos;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 26SeHEBTY8hrnxB.ee3f2eee2c27 --database epDDcfR53ZtdJLS39UEzsM --execute SELECT 'eleitorado' as tabela, COUNT(*) as total FROM eleitorado UNION ALL SELECT 'users', COUNT(*) FROM users UNION ALL SELECT 'resultados_eleitorais', COUNT(*) FROM resultados_eleitorais UNION ALL SELECT 'municipios', COUNT(*) FROM municipios UNION ALL SELECT 'zonas_eleitorais', COUNT(*) FROM zonas_eleitorais UNION ALL SELECT 'bairros', COUNT(*) FROM bairros UNION ALL SELECT 'partidos', COUNT(*) FROM partidos;",
+  "rows": [
+    {
+      "tabela": "users",
+      "total": "2"
+    },
+    {
+      "tabela": "resultados_eleitorais",
+      "total": "0"
+    },
+    {
+      "tabela": "municipios",
+      "total": "0"
+    },
+    {
+      "tabela": "zonas_eleitorais",
+      "total": "0"
+    },
+    {
+      "tabela": "eleitorado",
+      "total": "0"
+    },
+    {
+      "tabela": "bairros",
+      "total": "0"
+    },
+    {
+      "tabela": "partidos",
+      "total": "0"
+    }
+  ],
+  "messages": [],
+  "stdout": "tabela\ttotal\nusers\t2\nresultados_eleitorais\t0\nmunicipios\t0\nzonas_eleitorais\t0\neleitorado\t0\nbairros\t0\npartidos\t0\n",
+  "stderr": "",
+  "execution_time_ms": 629
+}
