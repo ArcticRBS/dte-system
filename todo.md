@@ -70,3 +70,10 @@
 - [x] Criar repositório GitHub para o projeto
 - [ ] Configurar para deploy no Vercel
 - [ ] Configurar conexão com Supabase
+
+## Integração Google Maps
+- [x] Analisar componente Map.tsx existente
+- [x] Implementar mapa de calor com Google Maps Visualization Library
+- [x] Adicionar marcadores interativos para bairros
+- [x] Criar camadas de dados (eleitores, votos nulos, partidos)
+- [x] Integrar filtros dinâmicos com o mapa
