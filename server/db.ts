@@ -637,3 +637,231 @@ export async function deleteSystemSetting(key: string) {
   if (!db) return;
   await db.delete(systemSettings).where(eq(systemSettings.settingKey, key));
 }
+
+
+// ==================== RELATÓRIOS ADMIN ====================
+
+export async function getAdminStats() {
+  const db = await getDb();
+  if (!db) return null;
+
+  // Total de usuários por role
+  const usersByRole = await db.select({
+    role: users.role,
+    count: count(),
+  })
+    .from(users)
+    .groupBy(users.role);
+
+  // Total de atividades por tipo nos últimos 30 dias
+  const thirtyDaysAgo = new Date();
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+  
+  const activitiesByType = await db.select({
+    activityType: userActivities.activityType,
+    count: count(),
+  })
+    .from(userActivities)
+    .where(gte(userActivities.createdAt, thirtyDaysAgo))
+    .groupBy(userActivities.activityType);
+
+  // Atividades por dia nos últimos 7 dias
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+  
+  const activitiesByDay = await db.select({
+    date: sql<string>`DATE(${userActivities.createdAt})`,
+    count: count(),
+  })
+    .from(userActivities)
+    .where(gte(userActivities.createdAt, sevenDaysAgo))
+    .groupBy(sql`DATE(${userActivities.createdAt})`)
+    .orderBy(sql`DATE(${userActivities.createdAt})`);
+
+  // Total de importações
+  const totalImportacoes = await db.select({ count: count() }).from(importacoes);
+
+  // Usuários mais ativos
+  const topUsers = await db.select({
+    userId: userActivities.userId,
+    userName: users.name,
+    userEmail: users.email,
+    activityCount: count(),
+  })
+    .from(userActivities)
+    .leftJoin(users, eq(userActivities.userId, users.id))
+    .groupBy(userActivities.userId, users.name, users.email)
+    .orderBy(desc(count()))
+    .limit(10);
+
+  return {
+    usersByRole,
+    activitiesByType,
+    activitiesByDay,
+    totalImportacoes: totalImportacoes[0]?.count || 0,
+    topUsers,
+  };
+}
+
+// ==================== LOGS DE AUDITORIA ====================
+
+export async function getAuditLogs(filters?: {
+  userId?: number;
+  action?: string;
+  startDate?: Date;
+  endDate?: Date;
+  limit?: number;
+}) {
+  const db = await getDb();
+  if (!db) return [];
+
+  const conditions = [];
+  if (filters?.userId) conditions.push(eq(auditLogs.userId, filters.userId));
+  if (filters?.action) conditions.push(eq(auditLogs.action, filters.action));
+  if (filters?.startDate) conditions.push(gte(auditLogs.createdAt, filters.startDate));
+  if (filters?.endDate) conditions.push(lte(auditLogs.createdAt, filters.endDate));
+
+  return db.select({
+    id: auditLogs.id,
+    userId: auditLogs.userId,
+    userName: users.name,
+    userEmail: users.email,
+    action: auditLogs.action,
+    tableName: auditLogs.tableName,
+    recordId: auditLogs.recordId,
+    oldValues: auditLogs.oldValues,
+    newValues: auditLogs.newValues,
+    ipAddress: auditLogs.ipAddress,
+    userAgent: auditLogs.userAgent,
+    createdAt: auditLogs.createdAt,
+  })
+    .from(auditLogs)
+    .leftJoin(users, eq(auditLogs.userId, users.id))
+    .where(conditions.length > 0 ? and(...conditions) : undefined)
+    .orderBy(desc(auditLogs.createdAt))
+    .limit(filters?.limit || 100);
+}
+
+export async function getAuditLogActions() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const result = await db.selectDistinct({ action: auditLogs.action }).from(auditLogs);
+  return result.map(r => r.action).filter(Boolean);
+}
+
+// ==================== EXPORTAÇÃO DE DADOS ====================
+
+export async function exportUsers() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return db.select({
+    id: users.id,
+    name: users.name,
+    email: users.email,
+    username: users.username,
+    role: users.role,
+    loginMethod: users.loginMethod,
+    createdAt: users.createdAt,
+    lastSignedIn: users.lastSignedIn,
+  }).from(users).orderBy(users.id);
+}
+
+export async function exportEleitorado(anoEleicao?: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const conditions = [];
+  if (anoEleicao) conditions.push(eq(eleitorado.anoEleicao, anoEleicao));
+  
+  return db.select({
+    id: eleitorado.id,
+    anoEleicao: eleitorado.anoEleicao,
+    municipioId: eleitorado.municipioId,
+    municipioNome: municipios.nome,
+    zonaId: eleitorado.zonaId,
+    zonaNome: zonasEleitorais.nome,
+    bairroId: eleitorado.bairroId,
+    bairroNome: bairros.nome,
+    totalEleitores: eleitorado.totalEleitores,
+    eleitoresMasculino: eleitorado.eleitoresMasculino,
+    eleitoresFeminino: eleitorado.eleitoresFeminino,
+    faixa16a17: eleitorado.faixa16a17,
+    faixa18a24: eleitorado.faixa18a24,
+    faixa25a34: eleitorado.faixa25a34,
+    faixa35a44: eleitorado.faixa35a44,
+    faixa45a59: eleitorado.faixa45a59,
+    faixa60a69: eleitorado.faixa60a69,
+    faixa70mais: eleitorado.faixa70mais,
+    escolaridadeAnalfabeto: eleitorado.escolaridadeAnalfabeto,
+    escolaridadeFundamental: eleitorado.escolaridadeFundamental,
+    escolaridadeMedio: eleitorado.escolaridadeMedio,
+    escolaridadeSuperior: eleitorado.escolaridadeSuperior,
+  })
+    .from(eleitorado)
+    .leftJoin(municipios, eq(eleitorado.municipioId, municipios.id))
+    .leftJoin(zonasEleitorais, eq(eleitorado.zonaId, zonasEleitorais.id))
+    .leftJoin(bairros, eq(eleitorado.bairroId, bairros.id))
+    .where(conditions.length > 0 ? and(...conditions) : undefined)
+    .orderBy(eleitorado.id);
+}
+
+export async function exportResultados(anoEleicao?: number, cargo?: string) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const conditions = [];
+  if (anoEleicao) conditions.push(eq(resultadosEleitorais.anoEleicao, anoEleicao));
+  if (cargo) conditions.push(eq(resultadosEleitorais.cargo, cargo));
+  
+  return db.select({
+    id: resultadosEleitorais.id,
+    anoEleicao: resultadosEleitorais.anoEleicao,
+    turno: resultadosEleitorais.turno,
+    cargo: resultadosEleitorais.cargo,
+    municipioId: resultadosEleitorais.municipioId,
+    municipioNome: municipios.nome,
+    zonaId: resultadosEleitorais.zonaId,
+    zonaNome: zonasEleitorais.nome,
+    candidatoId: resultadosEleitorais.candidatoId,
+    candidatoNome: candidatos.nome,
+    candidatoNumero: candidatos.numero,
+    partidoId: resultadosEleitorais.partidoId,
+    partidoSigla: partidos.sigla,
+    votosValidos: resultadosEleitorais.votosValidos,
+    votosNominais: resultadosEleitorais.votosNominais,
+    votosLegenda: resultadosEleitorais.votosLegenda,
+  })
+    .from(resultadosEleitorais)
+    .leftJoin(municipios, eq(resultadosEleitorais.municipioId, municipios.id))
+    .leftJoin(zonasEleitorais, eq(resultadosEleitorais.zonaId, zonasEleitorais.id))
+    .leftJoin(candidatos, eq(resultadosEleitorais.candidatoId, candidatos.id))
+    .leftJoin(partidos, eq(resultadosEleitorais.partidoId, partidos.id))
+    .where(conditions.length > 0 ? and(...conditions) : undefined)
+    .orderBy(resultadosEleitorais.id);
+}
+
+export async function exportActivities(startDate?: Date, endDate?: Date) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const conditions = [];
+  if (startDate) conditions.push(gte(userActivities.createdAt, startDate));
+  if (endDate) conditions.push(lte(userActivities.createdAt, endDate));
+  
+  return db.select({
+    id: userActivities.id,
+    userId: userActivities.userId,
+    userName: users.name,
+    userEmail: users.email,
+    activityType: userActivities.activityType,
+    description: userActivities.description,
+    ipAddress: userActivities.ipAddress,
+    createdAt: userActivities.createdAt,
+  })
+    .from(userActivities)
+    .leftJoin(users, eq(userActivities.userId, users.id))
+    .where(conditions.length > 0 ? and(...conditions) : undefined)
+    .orderBy(desc(userActivities.createdAt));
+}

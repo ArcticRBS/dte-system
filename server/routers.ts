@@ -548,6 +548,97 @@ const demoRouter = router({
 
 // ==================== MAIN ROUTER ====================
 
+// ==================== ADMIN REPORTS ROUTER ====================
+
+const adminReportsRouter = router({
+  stats: adminProcedure.query(async () => {
+    return db.getAdminStats();
+  }),
+});
+
+// ==================== AUDIT LOGS ROUTER ====================
+
+const auditRouter = router({
+  list: adminProcedure
+    .input(
+      z.object({
+        userId: z.number().optional(),
+        action: z.string().optional(),
+        startDate: z.date().optional(),
+        endDate: z.date().optional(),
+        limit: z.number().optional(),
+      }).optional()
+    )
+    .query(async ({ input }) => {
+      return db.getAuditLogs(input);
+    }),
+  actions: adminProcedure.query(async () => {
+    return db.getAuditLogActions();
+  }),
+  activities: adminProcedure
+    .input(
+      z.object({
+        limit: z.number().optional(),
+      }).optional()
+    )
+    .query(async ({ input }) => {
+      return db.getAllActivities(input?.limit || 100);
+    }),
+});
+
+// ==================== BACKUP/EXPORT ROUTER ====================
+
+const backupRouter = router({
+  users: adminProcedure.query(async ({ ctx }) => {
+    await db.logUserActivity({
+      userId: ctx.user.id,
+      activityType: "export",
+      description: "Exportação de usuários",
+    });
+    return db.exportUsers();
+  }),
+  eleitorado: adminProcedure
+    .input(z.object({ anoEleicao: z.number().optional() }).optional())
+    .query(async ({ input, ctx }) => {
+      await db.logUserActivity({
+        userId: ctx.user.id,
+        activityType: "export",
+        description: `Exportação de eleitorado${input?.anoEleicao ? ` (${input.anoEleicao})` : ""}`,
+      });
+      return db.exportEleitorado(input?.anoEleicao);
+    }),
+  resultados: adminProcedure
+    .input(
+      z.object({
+        anoEleicao: z.number().optional(),
+        cargo: z.string().optional(),
+      }).optional()
+    )
+    .query(async ({ input, ctx }) => {
+      await db.logUserActivity({
+        userId: ctx.user.id,
+        activityType: "export",
+        description: `Exportação de resultados eleitorais${input?.anoEleicao ? ` (${input.anoEleicao})` : ""}`,
+      });
+      return db.exportResultados(input?.anoEleicao, input?.cargo);
+    }),
+  activities: adminProcedure
+    .input(
+      z.object({
+        startDate: z.date().optional(),
+        endDate: z.date().optional(),
+      }).optional()
+    )
+    .query(async ({ input, ctx }) => {
+      await db.logUserActivity({
+        userId: ctx.user.id,
+        activityType: "export",
+        description: "Exportação de atividades",
+      });
+      return db.exportActivities(input?.startDate, input?.endDate);
+    }),
+});
+
 // ==================== SETTINGS ROUTER ====================
 
 const settingsRouter = router({
@@ -603,6 +694,9 @@ export const appRouter = router({
   importacoes: importacoesRouter,
   demo: demoRouter,
   settings: settingsRouter,
+  adminReports: adminReportsRouter,
+  audit: auditRouter,
+  backup: backupRouter,
 });
 
 export type AppRouter = typeof appRouter;

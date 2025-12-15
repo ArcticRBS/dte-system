@@ -19,6 +19,9 @@ import Relatorios from "./pages/Relatorios";
 import Login from "./pages/Login";
 import Perfil from "./pages/Perfil";
 import Configuracoes from "./pages/Configuracoes";
+import RelatoriosAdmin from "./pages/RelatoriosAdmin";
+import LogsAuditoria from "./pages/LogsAuditoria";
+import BackupDados from "./pages/BackupDados";
 
 function Router() {
   return (
@@ -41,6 +44,9 @@ function Router() {
       <Route path="/usuarios" component={Usuarios} />
       <Route path="/perfil" component={Perfil} />
       <Route path="/configuracoes" component={Configuracoes} />
+      <Route path="/relatorios-admin" component={RelatoriosAdmin} />
+      <Route path="/logs-auditoria" component={LogsAuditoria} />
+      <Route path="/backup" component={BackupDados} />
       
       {/* Fallback */}
       <Route path="/404" component={NotFound} />

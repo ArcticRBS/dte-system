@@ -19,6 +19,8 @@ import {
   Eye,
   User,
   Cog,
+  FileText,
+  HardDrive,
 } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
@@ -55,6 +57,9 @@ const mainNavItems: NavItem[] = [
 // Itens de administração (visíveis apenas para administradores)
 const adminNavItems: NavItem[] = [
   { label: "Usuários", href: "/usuarios", icon: <Shield className="w-5 h-5" />, roles: ["admin"] },
+  { label: "Relatórios Admin", href: "/relatorios-admin", icon: <PieChart className="w-5 h-5" />, roles: ["admin"] },
+  { label: "Logs de Auditoria", href: "/logs-auditoria", icon: <FileText className="w-5 h-5" />, roles: ["admin"] },
+  { label: "Backup de Dados", href: "/backup", icon: <HardDrive className="w-5 h-5" />, roles: ["admin"] },
   { label: "Configurações", href: "/configuracoes", icon: <Settings className="w-5 h-5" />, roles: ["admin"] },
 ];
 
