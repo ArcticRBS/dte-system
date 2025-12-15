@@ -243,3 +243,14 @@
 - [x] Habilitar Realtime nas tabelas (users, eleitorado, resultados_eleitorais)
 - [x] Implementar hook de notificações em tempo real
 - [x] Criar listeners para atualizações de dados
+
+## Migração de Dados para Supabase
+- [x] Verificar tabelas existentes no Supabase (15 tabelas)
+- [x] Criar script de verificação de migração
+- [ ] Migração completa pendente (aguardando confirmação do usuário)
+
+## Indicador de Conexão Realtime
+- [x] Criar componente de status de conexão (RealtimeStatus)
+- [x] Adicionar indicador no header mobile
+- [x] Adicionar indicador no sidebar desktop
+- [x] Mostrar status visual com tooltip (conectado/conectando/desconectado)

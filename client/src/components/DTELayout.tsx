@@ -39,6 +39,7 @@ import {
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import { Skeleton } from "./ui/skeleton";
 import { Separator } from "./ui/separator";
+import RealtimeStatus from "./RealtimeStatus";
 
 interface NavItem {
   label: string;
@@ -158,9 +159,9 @@ export function DTELayout({ children }: { children: React.ReactNode }) {
               alt="DTE Logo" 
               className="w-10 h-10 rounded-full object-cover shadow border border-teal-500/30"
             />
-            <span className="font-semibold text-sm">DATA TRACKING ELEITORAL - DTE</span>
+            <span className="font-semibold text-sm">DTE</span>
           </Link>
-          <div className="w-10" />
+          <RealtimeStatus />
         </div>
       </header>
 
@@ -193,12 +194,15 @@ export function DTELayout({ children }: { children: React.ReactNode }) {
                 <h1 className="font-bold text-sm text-sidebar-foreground leading-tight">ELEITORAL - DTE</h1>
               </div>
             </Link>
-            <button
-              onClick={() => setSidebarOpen(false)}
-              className="lg:hidden p-2 rounded-lg hover:bg-sidebar-accent"
-            >
-              <X className="w-5 h-5" />
-            </button>
+            <div className="flex items-center gap-2">
+              <RealtimeStatus />
+              <button
+                onClick={() => setSidebarOpen(false)}
+                className="lg:hidden p-2 rounded-lg hover:bg-sidebar-accent"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
           </div>
 
           {/* Main Navigation */}
