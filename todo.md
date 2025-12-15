@@ -133,3 +133,8 @@
 - [x] Implementar configurações de aparência (cores, logo)
 - [x] Adicionar configurações de notificações
 - [x] Criar seção de integrações (SSO, APIs)
+
+## Reorganização do Menu Lateral
+- [x] Separar área de administração na parte inferior do menu
+- [x] Exibir seção admin apenas para usuários administradores
+- [x] Incluir Usuários e Configurações na seção admin

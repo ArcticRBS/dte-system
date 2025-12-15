@@ -18,6 +18,7 @@ import {
   X,
   Eye,
   User,
+  Cog,
 } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
@@ -31,6 +32,7 @@ import {
 } from "./ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import { Skeleton } from "./ui/skeleton";
+import { Separator } from "./ui/separator";
 
 interface NavItem {
   label: string;
@@ -39,16 +41,21 @@ interface NavItem {
   roles?: string[];
 }
 
-const navItems: NavItem[] = [
+// Itens de navegação principal (visíveis para todos ou baseado em roles específicas)
+const mainNavItems: NavItem[] = [
   { label: "Dashboard", href: "/dashboard", icon: <Home className="w-5 h-5" /> },
   { label: "Eleitorado", href: "/eleitorado", icon: <Users className="w-5 h-5" /> },
   { label: "Resultados", href: "/resultados", icon: <BarChart3 className="w-5 h-5" /> },
   { label: "Votos Nulos/Brancos", href: "/votos-nulos", icon: <Vote className="w-5 h-5" /> },
   { label: "Mapas de Calor", href: "/mapas", icon: <Map className="w-5 h-5" /> },
   { label: "Importar Dados", href: "/importar", icon: <FileSpreadsheet className="w-5 h-5" />, roles: ["admin", "gestor"] },
+  { label: "Demonstração", href: "/demo", icon: <Eye className="w-5 h-5" /> },
+];
+
+// Itens de administração (visíveis apenas para administradores)
+const adminNavItems: NavItem[] = [
   { label: "Usuários", href: "/usuarios", icon: <Shield className="w-5 h-5" />, roles: ["admin"] },
   { label: "Configurações", href: "/configuracoes", icon: <Settings className="w-5 h-5" />, roles: ["admin"] },
-  { label: "Demonstração", href: "/demo", icon: <Eye className="w-5 h-5" /> },
 ];
 
 function getRoleLabel(role: string) {
@@ -76,11 +83,19 @@ export function DTELayout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const filteredNavItems = navItems.filter((item) => {
+  const filteredMainNavItems = mainNavItems.filter((item) => {
     if (!item.roles) return true;
     if (!user) return false;
     return item.roles.includes(user.role);
   });
+
+  const filteredAdminNavItems = adminNavItems.filter((item) => {
+    if (!item.roles) return true;
+    if (!user) return false;
+    return item.roles.includes(user.role);
+  });
+
+  const isAdmin = user?.role === "admin";
 
   if (loading) {
     return <DTELayoutSkeleton />;
@@ -146,9 +161,9 @@ export function DTELayout({ children }: { children: React.ReactNode }) {
             </button>
           </div>
 
-          {/* Navigation */}
+          {/* Main Navigation */}
           <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
-            {filteredNavItems.map((item) => (
+            {filteredMainNavItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -163,6 +178,34 @@ export function DTELayout({ children }: { children: React.ReactNode }) {
               </Link>
             ))}
           </nav>
+
+          {/* Admin Section - Only visible for admins */}
+          {isAdmin && filteredAdminNavItems.length > 0 && (
+            <div className="px-4 pb-4">
+              <div className="flex items-center gap-2 px-3 py-2 mb-2">
+                <Cog className="w-4 h-4 text-muted-foreground" />
+                <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  Administração
+                </span>
+              </div>
+              <div className="space-y-1 p-2 rounded-xl bg-sidebar-accent/50 border border-sidebar-border">
+                {filteredAdminNavItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={cn(
+                      "dte-nav-item",
+                      location === item.href && "active"
+                    )}
+                    onClick={() => setSidebarOpen(false)}
+                  >
+                    {item.icon}
+                    <span>{item.label}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* User Section */}
           <div className="p-4 border-t border-sidebar-border">
