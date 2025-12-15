@@ -1,0 +1,82 @@
+{
+  "query": "SHOW TABLES;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 26SeHEBTY8hrnxB.ee3f2eee2c27 --database epDDcfR53ZtdJLS39UEzsM --execute SHOW TABLES;",
+  "rows": [
+    {
+      "Tables_in_epDDcfR53ZtdJLS39UEzsM": "__drizzle_migrations"
+    },
+    {
+      "Tables_in_epDDcfR53ZtdJLS39UEzsM": "admin_notifications"
+    },
+    {
+      "Tables_in_epDDcfR53ZtdJLS39UEzsM": "audit_logs"
+    },
+    {
+      "Tables_in_epDDcfR53ZtdJLS39UEzsM": "backup_history"
+    },
+    {
+      "Tables_in_epDDcfR53ZtdJLS39UEzsM": "bairros"
+    },
+    {
+      "Tables_in_epDDcfR53ZtdJLS39UEzsM": "candidatos"
+    },
+    {
+      "Tables_in_epDDcfR53ZtdJLS39UEzsM": "candidatos_tse"
+    },
+    {
+      "Tables_in_epDDcfR53ZtdJLS39UEzsM": "coligacoes_tse"
+    },
+    {
+      "Tables_in_epDDcfR53ZtdJLS39UEzsM": "demo_data"
+    },
+    {
+      "Tables_in_epDDcfR53ZtdJLS39UEzsM": "eleitorado"
+    },
+    {
+      "Tables_in_epDDcfR53ZtdJLS39UEzsM": "eleitorado_tse"
+    },
+    {
+      "Tables_in_epDDcfR53ZtdJLS39UEzsM": "importacoes"
+    },
+    {
+      "Tables_in_epDDcfR53ZtdJLS39UEzsM": "municipios"
+    },
+    {
+      "Tables_in_epDDcfR53ZtdJLS39UEzsM": "partidos"
+    },
+    {
+      "Tables_in_epDDcfR53ZtdJLS39UEzsM": "partidos_tse"
+    },
+    {
+      "Tables_in_epDDcfR53ZtdJLS39UEzsM": "regioes"
+    },
+    {
+      "Tables_in_epDDcfR53ZtdJLS39UEzsM": "resultados_eleitorais"
+    },
+    {
+      "Tables_in_epDDcfR53ZtdJLS39UEzsM": "scheduled_backups"
+    },
+    {
+      "Tables_in_epDDcfR53ZtdJLS39UEzsM": "secoes_eleitorais"
+    },
+    {
+      "Tables_in_epDDcfR53ZtdJLS39UEzsM": "system_settings"
+    },
+    {
+      "Tables_in_epDDcfR53ZtdJLS39UEzsM": "user_activities"
+    },
+    {
+      "Tables_in_epDDcfR53ZtdJLS39UEzsM": "users"
+    },
+    {
+      "Tables_in_epDDcfR53ZtdJLS39UEzsM": "votos_nulos_brancos"
+    },
+    {
+      "Tables_in_epDDcfR53ZtdJLS39UEzsM": "zonas_eleitorais"
+    }
+  ],
+  "messages": [],
+  "stdout": "Tables_in_epDDcfR53ZtdJLS39UEzsM\n__drizzle_migrations\nadmin_notifications\naudit_logs\nbackup_history\nbairros\ncandidatos\ncandidatos_tse\ncoligacoes_tse\ndemo_data\neleitorado\neleitorado_tse\nimportacoes\nmunicipios\npartidos\npartidos_tse\nregioes\nresultados_eleitorais\nscheduled_backups\nsecoes_eleitorais\nsystem_settings\nuser_activities\nusers\nvotos_nulos_brancos\nzonas_eleitorais\n",
+  "stderr": "",
+  "execution_time_ms": 57
+}
