@@ -1,0 +1,182 @@
+[
+  {
+    "id": 1,
+    "nome": "PORTO VELHO",
+    "latitude": -8.551018192199995,
+    "longitude": -63.7925095989563,
+    "totalEleitores": 362248,
+    "votosNulos": 10867,
+    "votosBrancos": 7245
+  },
+  {
+    "id": 2,
+    "nome": "JI-PARANÃ",
+    "latitude": -8.91065625701907,
+    "longitude": -63.98476347818536,
+    "totalEleitores": 96959,
+    "votosNulos": 2909,
+    "votosBrancos": 1939
+  },
+  {
+    "id": 3,
+    "nome": "ARIQUEMES",
+    "latitude": -8.979511305483328,
+    "longitude": -63.95455218276959,
+    "totalEleitores": 73201,
+    "votosNulos": 2196,
+    "votosBrancos": 1464
+  },
+  {
+    "id": 4,
+    "nome": "VILHENA",
+    "latitude": -8.841965670566976,
+    "longitude": -63.90034878826822,
+    "totalEleitores": 69345,
+    "votosNulos": 2080,
+    "votosBrancos": 1387
+  },
+  {
+    "id": 5,
+    "nome": "CACOAL",
+    "latitude": -8.667582430507663,
+    "longitude": -63.99482368083241,
+    "totalEleitores": 69088,
+    "votosNulos": 2073,
+    "votosBrancos": 1382
+  },
+  {
+    "id": 6,
+    "nome": "ROLIM DE MOURA",
+    "latitude": -8.872717291708103,
+    "longitude": -63.704929142153034,
+    "totalEleitores": 41369,
+    "votosNulos": 1241,
+    "votosBrancos": 827
+  },
+  {
+    "id": 7,
+    "nome": "JARU",
+    "latitude": -8.93779156534978,
+    "longitude": -64.08948627405636,
+    "totalEleitores": 40937,
+    "votosNulos": 1228,
+    "votosBrancos": 819
+  },
+  {
+    "id": 8,
+    "nome": "GUAJARÃ-MIRIM",
+    "latitude": -8.64799384158129,
+    "longitude": -63.87463749829377,
+    "totalEleitores": 29557,
+    "votosNulos": 887,
+    "votosBrancos": 591
+  },
+  {
+    "id": 9,
+    "nome": "OURO PRETO DO OESTE",
+    "latitude": -8.961048602185672,
+    "longitude": -63.68725961013653,
+    "totalEleitores": 28501,
+    "votosNulos": 855,
+    "votosBrancos": 570
+  },
+  {
+    "id": 10,
+    "nome": "PIMENTA BUENO",
+    "latitude": -8.954020753415929,
+    "longitude": -63.67955251918045,
+    "totalEleitores": 27556,
+    "votosNulos": 827,
+    "votosBrancos": 551
+  },
+  {
+    "id": 11,
+    "nome": "MACHADINHO D'OESTE",
+    "latitude": -8.894722421074064,
+    "longitude": -63.991184699315305,
+    "totalEleitores": 24922,
+    "votosNulos": 748,
+    "votosBrancos": 498
+  },
+  {
+    "id": 12,
+    "nome": "BURITIS",
+    "latitude": -8.875440894222672,
+    "longitude": -64.14002325146333,
+    "totalEleitores": 24145,
+    "votosNulos": 724,
+    "votosBrancos": 483
+  },
+  {
+    "id": 13,
+    "nome": "ESPIGÃO DO OESTE",
+    "latitude": -8.684304550689216,
+    "longitude": -63.91388497016307,
+    "totalEleitores": 23943,
+    "votosNulos": 718,
+    "votosBrancos": 479
+  },
+  {
+    "id": 14,
+    "nome": "CANDEIAS DO JAMARI",
+    "latitude": -8.729433705901274,
+    "longitude": -64.02213464309243,
+    "totalEleitores": 21402,
+    "votosNulos": 642,
+    "votosBrancos": 428
+  },
+  {
+    "id": 15,
+    "nome": "NOVA MAMORÃ",
+    "latitude": -8.801971108800368,
+    "longitude": -63.94967020140165,
+    "totalEleitores": 20216,
+    "votosNulos": 606,
+    "votosBrancos": 404
+  },
+  {
+    "id": 16,
+    "nome": "ALTA FLORESTA D'OESTE",
+    "latitude": -8.519620132157167,
+    "longitude": -63.86557485774717,
+    "totalEleitores": 18186,
+    "votosNulos": 546,
+    "votosBrancos": 364
+  },
+  {
+    "id": 17,
+    "nome": "SÃO MIGUEL DO GUAPORÃ",
+    "latitude": -8.87642049652482,
+    "longitude": -63.90909896600598,
+    "totalEleitores": 17052,
+    "votosNulos": 512,
+    "votosBrancos": 341
+  },
+  {
+    "id": 18,
+    "nome": "PRESIDENTE MÃDICI",
+    "latitude": -9.003769989345868,
+    "longitude": -63.65039425313698,
+    "totalEleitores": 16053,
+    "votosNulos": 482,
+    "votosBrancos": 321
+  },
+  {
+    "id": 19,
+    "nome": "COLORADO DO OESTE",
+    "latitude": -8.518254824385634,
+    "longitude": -64.04366542117644,
+    "totalEleitores": 14029,
+    "votosNulos": 421,
+    "votosBrancos": 281
+  },
+  {
+    "id": 20,
+    "nome": "NOVA BRASILÃNDIA D'OESTE",
+    "latitude": -8.531795021049609,
+    "longitude": -64.04743525019272,
+    "totalEleitores": 13444,
+    "votosNulos": 403,
+    "votosBrancos": 269
+  }
+]

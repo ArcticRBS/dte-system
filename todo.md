@@ -90,3 +90,14 @@
 - [x] Implementar upload para partidos e coligações
 - [x] Criar templates de importação
 - [x] Documentar formato esperado dos arquivos
+
+## Importação de Dados TSE - Dezembro 2024
+- [ ] Extrair arquivos ZIP do TSE (2020, 2022, 2024)
+- [ ] Filtrar dados de Rondônia
+- [ ] Popular tabela eleitorado_tse
+- [ ] Popular tabela candidatos_tse
+- [ ] Popular tabela coligacoes_tse
+- [ ] Popular tabela partidos_tse
+- [ ] Importar dados de comparecimento/abstenção
+- [ ] Configurar DNS do domínio dte.api.br
+- [ ] Criar usuários gestores no sistema

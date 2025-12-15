@@ -1,0 +1,418 @@
+[
+  {
+    "nome": "PORTO VELHO",
+    "codigo": "35",
+    "total_eleitores": 362248,
+    "masculino": 172957,
+    "feminino": 189291,
+    "zonas": 4
+  },
+  {
+    "nome": "JI-PARANÃ",
+    "codigo": "51",
+    "total_eleitores": 96959,
+    "masculino": 46207,
+    "feminino": 50752,
+    "zonas": 2
+  },
+  {
+    "nome": "ARIQUEMES",
+    "codigo": "78",
+    "total_eleitores": 73201,
+    "masculino": 35328,
+    "feminino": 37873,
+    "zonas": 1
+  },
+  {
+    "nome": "VILHENA",
+    "codigo": "132",
+    "total_eleitores": 69345,
+    "masculino": 32885,
+    "feminino": 36460,
+    "zonas": 1
+  },
+  {
+    "nome": "CACOAL",
+    "codigo": "94",
+    "total_eleitores": 69088,
+    "masculino": 33046,
+    "feminino": 36042,
+    "zonas": 1
+  },
+  {
+    "nome": "ROLIM DE MOURA",
+    "codigo": "299",
+    "total_eleitores": 41369,
+    "masculino": 19877,
+    "feminino": 21492,
+    "zonas": 1
+  },
+  {
+    "nome": "JARU",
+    "codigo": "159",
+    "total_eleitores": 40937,
+    "masculino": 19917,
+    "feminino": 21020,
+    "zonas": 1
+  },
+  {
+    "nome": "GUAJARÃ-MIRIM",
+    "codigo": "19",
+    "total_eleitores": 29557,
+    "masculino": 14408,
+    "feminino": 15149,
+    "zonas": 1
+  },
+  {
+    "nome": "OURO PRETO DO OESTE",
+    "codigo": "175",
+    "total_eleitores": 28501,
+    "masculino": 13572,
+    "feminino": 14929,
+    "zonas": 1
+  },
+  {
+    "nome": "PIMENTA BUENO",
+    "codigo": "116",
+    "total_eleitores": 27556,
+    "masculino": 13607,
+    "feminino": 13949,
+    "zonas": 1
+  },
+  {
+    "nome": "MACHADINHO D'OESTE",
+    "codigo": "396",
+    "total_eleitores": 24922,
+    "masculino": 12925,
+    "feminino": 11997,
+    "zonas": 1
+  },
+  {
+    "nome": "BURITIS",
+    "codigo": "779",
+    "total_eleitores": 24145,
+    "masculino": 12110,
+    "feminino": 12035,
+    "zonas": 1
+  },
+  {
+    "nome": "ESPIGÃO DO OESTE",
+    "codigo": "256",
+    "total_eleitores": 23943,
+    "masculino": 11933,
+    "feminino": 12010,
+    "zonas": 1
+  },
+  {
+    "nome": "CANDEIAS DO JAMARI",
+    "codigo": "477",
+    "total_eleitores": 21402,
+    "masculino": 10941,
+    "feminino": 10461,
+    "zonas": 1
+  },
+  {
+    "nome": "NOVA MAMORÃ",
+    "codigo": "434",
+    "total_eleitores": 20216,
+    "masculino": 10276,
+    "feminino": 9940,
+    "zonas": 1
+  },
+  {
+    "nome": "ALTA FLORESTA D'OESTE",
+    "codigo": "310",
+    "total_eleitores": 18186,
+    "masculino": 9154,
+    "feminino": 9032,
+    "zonas": 1
+  },
+  {
+    "nome": "SÃO MIGUEL DO GUAPORÃ",
+    "codigo": "418",
+    "total_eleitores": 17052,
+    "masculino": 8508,
+    "feminino": 8544,
+    "zonas": 1
+  },
+  {
+    "nome": "PRESIDENTE MÃDICI",
+    "codigo": "191",
+    "total_eleitores": 16053,
+    "masculino": 7888,
+    "feminino": 8165,
+    "zonas": 1
+  },
+  {
+    "nome": "COLORADO DO OESTE",
+    "codigo": "230",
+    "total_eleitores": 14029,
+    "masculino": 6960,
+    "feminino": 7069,
+    "zonas": 1
+  },
+  {
+    "nome": "NOVA BRASILÃNDIA D'OESTE",
+    "codigo": "370",
+    "total_eleitores": 13444,
+    "masculino": 6757,
+    "feminino": 6687,
+    "zonas": 1
+  },
+  {
+    "nome": "CEREJEIRAS",
+    "codigo": "272",
+    "total_eleitores": 13193,
+    "masculino": 6362,
+    "feminino": 6831,
+    "zonas": 1
+  },
+  {
+    "nome": "SÃO FRANCISCO DO GUAPORÃ",
+    "codigo": "795",
+    "total_eleitores": 12680,
+    "masculino": 6347,
+    "feminino": 6333,
+    "zonas": 1
+  },
+  {
+    "nome": "ALTO PARAÃSO",
+    "codigo": "639",
+    "total_eleitores": 12398,
+    "masculino": 6325,
+    "feminino": 6073,
+    "zonas": 1
+  },
+  {
+    "nome": "CUJUBIM",
+    "codigo": "680",
+    "total_eleitores": 11617,
+    "masculino": 5833,
+    "feminino": 5784,
+    "zonas": 1
+  },
+  {
+    "nome": "ALVORADA DO OESTE",
+    "codigo": "337",
+    "total_eleitores": 10984,
+    "masculino": 5478,
+    "feminino": 5506,
+    "zonas": 1
+  },
+  {
+    "nome": "MONTE NEGRO",
+    "codigo": "663",
+    "total_eleitores": 10598,
+    "masculino": 5314,
+    "feminino": 5284,
+    "zonas": 1
+  },
+  {
+    "nome": "SERINGUEIRAS",
+    "codigo": "582",
+    "total_eleitores": 9620,
+    "masculino": 4971,
+    "feminino": 4649,
+    "zonas": 1
+  },
+  {
+    "nome": "URUPÃ",
+    "codigo": "566",
+    "total_eleitores": 9303,
+    "masculino": 4657,
+    "feminino": 4646,
+    "zonas": 1
+  },
+  {
+    "nome": "COSTA MARQUES",
+    "codigo": "213",
+    "total_eleitores": 9126,
+    "masculino": 4712,
+    "feminino": 4414,
+    "zonas": 1
+  },
+  {
+    "nome": "ALTO ALEGRE DOS PARECIS",
+    "codigo": "736",
+    "total_eleitores": 8940,
+    "masculino": 4570,
+    "feminino": 4370,
+    "zonas": 1
+  },
+  {
+    "nome": "MIRANTE DA SERRA",
+    "codigo": "574",
+    "total_eleitores": 8515,
+    "masculino": 4216,
+    "feminino": 4299,
+    "zonas": 1
+  },
+  {
+    "nome": "CHUPINGUAIA",
+    "codigo": "809",
+    "total_eleitores": 8075,
+    "masculino": 4290,
+    "feminino": 3785,
+    "zonas": 1
+  },
+  {
+    "nome": "THEOBROMA",
+    "codigo": "590",
+    "total_eleitores": 7880,
+    "masculino": 4106,
+    "feminino": 3774,
+    "zonas": 1
+  },
+  {
+    "nome": "CAMPO NOVO DE RONDÃNIA",
+    "codigo": "671",
+    "total_eleitores": 7826,
+    "masculino": 4104,
+    "feminino": 3722,
+    "zonas": 1
+  },
+  {
+    "nome": "GOVERNADOR JORGE TEIXEIRA",
+    "codigo": "612",
+    "total_eleitores": 7392,
+    "masculino": 3767,
+    "feminino": 3625,
+    "zonas": 1
+  },
+  {
+    "nome": "ITAPUÃ DO OESTE",
+    "codigo": "493",
+    "total_eleitores": 7280,
+    "masculino": 3728,
+    "feminino": 3552,
+    "zonas": 1
+  },
+  {
+    "nome": "NOVO HORIZONTE DO OESTE",
+    "codigo": "515",
+    "total_eleitores": 7188,
+    "masculino": 3689,
+    "feminino": 3499,
+    "zonas": 1
+  },
+  {
+    "nome": "SANTA LUZIA D'OESTE",
+    "codigo": "353",
+    "total_eleitores": 7037,
+    "masculino": 3549,
+    "feminino": 3488,
+    "zonas": 1
+  },
+  {
+    "nome": "VALE DO ANARI",
+    "codigo": "698",
+    "total_eleitores": 6722,
+    "masculino": 3487,
+    "feminino": 3235,
+    "zonas": 1
+  },
+  {
+    "nome": "MINISTRO ANDREAZZA",
+    "codigo": "604",
+    "total_eleitores": 6321,
+    "masculino": 3178,
+    "feminino": 3143,
+    "zonas": 1
+  },
+  {
+    "nome": "CORUMBIARA",
+    "codigo": "655",
+    "total_eleitores": 5841,
+    "masculino": 3068,
+    "feminino": 2773,
+    "zonas": 1
+  },
+  {
+    "nome": "VALE DO PARAÃSO",
+    "codigo": "558",
+    "total_eleitores": 5784,
+    "masculino": 2898,
+    "feminino": 2886,
+    "zonas": 1
+  },
+  {
+    "nome": "NOVA UNIÃO",
+    "codigo": "744",
+    "total_eleitores": 5420,
+    "masculino": 2754,
+    "feminino": 2666,
+    "zonas": 1
+  },
+  {
+    "nome": "CABIXI",
+    "codigo": "450",
+    "total_eleitores": 5006,
+    "masculino": 2571,
+    "feminino": 2435,
+    "zonas": 1
+  },
+  {
+    "nome": "SÃO FELIPE D'OESTE",
+    "codigo": "710",
+    "total_eleitores": 4622,
+    "masculino": 2381,
+    "feminino": 2241,
+    "zonas": 1
+  },
+  {
+    "nome": "CACAULÃNDIA",
+    "codigo": "620",
+    "total_eleitores": 4126,
+    "masculino": 2117,
+    "feminino": 2009,
+    "zonas": 1
+  },
+  {
+    "nome": "PARECIS",
+    "codigo": "701",
+    "total_eleitores": 4052,
+    "masculino": 2154,
+    "feminino": 1898,
+    "zonas": 1
+  },
+  {
+    "nome": "TEIXEIRÃPOLIS",
+    "codigo": "752",
+    "total_eleitores": 4018,
+    "masculino": 2066,
+    "feminino": 1952,
+    "zonas": 1
+  },
+  {
+    "nome": "RIO CRESPO",
+    "codigo": "647",
+    "total_eleitores": 3811,
+    "masculino": 1989,
+    "feminino": 1822,
+    "zonas": 1
+  },
+  {
+    "nome": "CASTANHEIRAS",
+    "codigo": "531",
+    "total_eleitores": 3623,
+    "masculino": 1866,
+    "feminino": 1757,
+    "zonas": 1
+  },
+  {
+    "nome": "PRIMAVERA DE RONDÃNIA",
+    "codigo": "728",
+    "total_eleitores": 3044,
+    "masculino": 1546,
+    "feminino": 1498,
+    "zonas": 1
+  },
+  {
+    "nome": "PIMENTEIRAS DO OESTE",
+    "codigo": "787",
+    "total_eleitores": 2351,
+    "masculino": 1230,
+    "feminino": 1121,
+    "zonas": 1
+  }
+]

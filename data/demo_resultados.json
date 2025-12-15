@@ -1,0 +1,44 @@
+{
+  "partidos": [
+    {
+      "sigla": "UNIÃO",
+      "votos": 227978,
+      "cor": "#0099CC"
+    },
+    {
+      "sigla": "PL",
+      "votos": 202647,
+      "cor": "#0000FF"
+    },
+    {
+      "sigla": "MDB",
+      "votos": 177316,
+      "cor": "#00FF00"
+    },
+    {
+      "sigla": "PP",
+      "votos": 151986,
+      "cor": "#003366"
+    },
+    {
+      "sigla": "PSD",
+      "votos": 126655,
+      "cor": "#FF6600"
+    },
+    {
+      "sigla": "REPUBLICANOS",
+      "votos": 101324,
+      "cor": "#00CC00"
+    },
+    {
+      "sigla": "PT",
+      "votos": 88658,
+      "cor": "#FF0000"
+    },
+    {
+      "sigla": "PDT",
+      "votos": 63327,
+      "cor": "#FF3300"
+    }
+  ]
+}
