@@ -268,3 +268,15 @@
 - [x] Copiar logo oficial DATA-RO para o projeto
 - [x] Atualizar layout: DATA-RO | DTE com barra divisória
 - [x] Incluir DATA-RO no copyright
+
+## Configuração Domínio Vercel
+- [ ] Verificar projetos no Vercel
+- [ ] Configurar domínio dte.api.br
+- [ ] Verificar registros DNS necessários
+
+## Correção Deploy Vercel
+- [ ] Criar estrutura /api para Vercel Serverless
+- [ ] Adaptar tRPC para serverless handler
+- [ ] Configurar frontend SPA
+- [ ] Atualizar vercel.json
+- [ ] Fazer novo deploy e testar
