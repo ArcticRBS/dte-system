@@ -1,0 +1,17 @@
+{
+  "query": "SELECT id, name, email, username, role FROM users WHERE email = 'gcotinguiba@gmail.com';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 26SeHEBTY8hrnxB.ee3f2eee2c27 --database epDDcfR53ZtdJLS39UEzsM --execute SELECT id, name, email, username, role FROM users WHERE email = 'gcotinguiba@gmail.com';",
+  "rows": [
+    {
+      "id": "930001",
+      "name": "Geraldo Castro Cotinguiba",
+      "email": "gcotinguiba@gmail.com",
+      "username": "geraldo.cotinguiba",
+      "role": "gestor"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\temail\tusername\trole\n930001\tGeraldo Castro Cotinguiba\tgcotinguiba@gmail.com\tgeraldo.cotinguiba\tgestor\n",
+  "stderr": "",
+  "execution_time_ms": 48
+}

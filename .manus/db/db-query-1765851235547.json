@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO users (openId, name, email, username, role, passwordHash, isActive, createdAt, updatedAt, lastSignedIn) VALUES ('dataro-admin-master', 'DATA-RO Admin', 'contato@dataro-it.com.br', 'dataroadmin', 'admin', '$2b$10$Xz6yYMr1FTOZVKTxfWKRBeOpfBVApJReo7WOihQW9TaJcbwa2Vz3m', true, NOW(), NOW(), NOW());",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 26SeHEBTY8hrnxB.ee3f2eee2c27 --database epDDcfR53ZtdJLS39UEzsM --execute INSERT INTO users (openId, name, email, username, role, passwordHash, isActive, createdAt, updatedAt, lastSignedIn) VALUES ('dataro-admin-master', 'DATA-RO Admin', 'contato@dataro-it.com.br', 'dataroadmin', 'admin', '$2b$10$Xz6yYMr1FTOZVKTxfWKRBeOpfBVApJReo7WOihQW9TaJcbwa2Vz3m', true, NOW(), NOW(), NOW());",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 63
+}

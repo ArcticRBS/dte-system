@@ -1,0 +1,8 @@
+{
+  "query": "INSERT INTO users (open_id, name, email, username, role, password_hash, must_change_password, created_at) VALUES ('geraldo-1765851033906', 'Geraldo Castro Cotinguiba', 'gcotinguiba@gmail.com', 'geraldo.cotinguiba', 'gestor', '$2b$10$292vrfcInPQ3hLJ2HtmnfuvWLltfKUMcdAEdVVmsQu97MEm/AGj5i', true, NOW());",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 26SeHEBTY8hrnxB.ee3f2eee2c27 --database epDDcfR53ZtdJLS39UEzsM --execute INSERT INTO users (open_id, name, email, username, role, password_hash, must_change_password, created_at) VALUES ('geraldo-1765851033906', 'Geraldo Castro Cotinguiba', 'gcotinguiba@gmail.com', 'geraldo.cotinguiba', 'gestor', '$2b$10$292vrfcInPQ3hLJ2HtmnfuvWLltfKUMcdAEdVVmsQu97MEm/AGj5i', true, NOW());",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 1: Unknown column 'open_id' in 'field list'"
+  ]
+}

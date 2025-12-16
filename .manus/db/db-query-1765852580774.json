@@ -1,0 +1,25 @@
+{
+  "query": "SELECT * FROM users WHERE username = 'dataroadmin' LIMIT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 26SeHEBTY8hrnxB.ee3f2eee2c27 --database epDDcfR53ZtdJLS39UEzsM --execute SELECT * FROM users WHERE username = 'dataroadmin' LIMIT 1;",
+  "rows": [
+    {
+      "id": "930002",
+      "openId": "dataro-admin-master",
+      "name": "DATA-RO Admin",
+      "email": "contato@dataro-it.com.br",
+      "loginMethod": "NULL",
+      "role": "admin",
+      "createdAt": "2025-12-16 02:13:55",
+      "updatedAt": "2025-12-16 02:13:55",
+      "lastSignedIn": "2025-12-16 02:13:55",
+      "username": "dataroadmin",
+      "passwordHash": "$2b$10$Xz6yYMr1FTOZVKTxfWKRBeOpfBVApJReo7WOihQW9TaJcbwa2Vz3m",
+      "isActive": "1",
+      "avatarUrl": "NULL"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\topenId\tname\temail\tloginMethod\trole\tcreatedAt\tupdatedAt\tlastSignedIn\tusername\tpasswordHash\tisActive\tavatarUrl\n930002\tdataro-admin-master\tDATA-RO Admin\tcontato@dataro-it.com.br\tNULL\tadmin\t2025-12-16 02:13:55\t2025-12-16 02:13:55\t2025-12-16 02:13:55\tdataroadmin\t$2b$10$Xz6yYMr1FTOZVKTxfWKRBeOpfBVApJReo7WOihQW9TaJcbwa2Vz3m\t1\tNULL\n",
+  "stderr": "",
+  "execution_time_ms": 54
+}

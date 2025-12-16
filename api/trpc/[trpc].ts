@@ -3,10 +3,47 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { appRouter } from "../../server/routers";
 import { sdk } from "../../server/_core/sdk";
 import type { User } from "../../drizzle/schema";
+import { serialize } from "cookie";
 
 export const config = {
   runtime: "nodejs",
 };
+
+// Helper to create a mock response object that captures cookie calls
+function createMockResponse(realRes: VercelResponse) {
+  const cookies: string[] = [];
+  
+  return {
+    cookies,
+    cookie: (name: string, value: string, options: any = {}) => {
+      const cookieString = serialize(name, value, {
+        path: options.path || "/",
+        httpOnly: options.httpOnly !== false,
+        secure: options.secure !== false,
+        sameSite: options.sameSite || "lax",
+        maxAge: options.maxAge,
+        domain: options.domain,
+      });
+      cookies.push(cookieString);
+    },
+    clearCookie: (name: string, options: any = {}) => {
+      const cookieString = serialize(name, "", {
+        path: options.path || "/",
+        httpOnly: options.httpOnly !== false,
+        secure: options.secure !== false,
+        sameSite: options.sameSite || "lax",
+        maxAge: -1,
+        expires: new Date(0),
+      });
+      cookies.push(cookieString);
+    },
+    // Proxy other methods to real response
+    setHeader: realRes.setHeader.bind(realRes),
+    status: realRes.status.bind(realRes),
+    send: realRes.send.bind(realRes),
+    json: realRes.json.bind(realRes),
+  };
+}
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Convert Vercel request to fetch Request
@@ -30,6 +67,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     body,
   });
 
+  // Create mock response to capture cookies
+  const mockRes = createMockResponse(res);
+
   const response = await fetchRequestHandler({
     endpoint: "/api/trpc",
     req: fetchRequest,
@@ -48,16 +88,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
       return {
         req: req as any,
-        res: res as any,
+        res: mockRes as any,
         user,
       };
     },
   });
 
-  // Set response headers
+  // Set response headers from tRPC response
   response.headers.forEach((value, key) => {
-    res.setHeader(key, value);
+    // Skip content-length as it may change
+    if (key.toLowerCase() !== "content-length") {
+      res.setHeader(key, value);
+    }
   });
+
+  // Set cookies that were captured during the request
+  if (mockRes.cookies.length > 0) {
+    res.setHeader("Set-Cookie", mockRes.cookies);
+  }
 
   // Set status and send body
   res.status(response.status);
